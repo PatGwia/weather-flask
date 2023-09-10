@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+<div class="container">
+    {% block content %}
+
+    {% for task in tasks %}
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="weather-card d-flex justify-content-between mb-3">
+            <div>
+                <p class="fs-4"> {{task["title"]}}</p>
+                <p class="text-warning"> {{task["desc"]}}</p>
+                <p> Category: {{task["category"]}}</p>
+                <p> Urgency: {{task["urgency"]}}</p>
+            </div>
+           
+        </div>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#id{{task['_id']}}">
+            Usuń
+          </button>  
+
+            <div class="modal fade" id="id{{task['_id']}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Are you sure to remove the task? 
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <form method="post" action="/delete-task/{{task['_id']}}">
+                        <button class="btn btn-danger">Yes, remove </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </form>
+        
+    </div>
+    {% endfor %}
+    
+    <button 
+    class="btn btn-primary add-btn" 
+    type="button" 
+    data-bs-toggle="offcanvas" 
+    data-bs-target="#offcanvasRight" 
+    aria-controls="offcanvasRight">
+        <i class="bi bi-file-earmark-plus"></i>
+    </button>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+      <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">New Task</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <form method="post" action="/add-task">
+            <div class="mb-3">
+                <label for="Title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="Title" placeholder="Task type title" name="title" required minlength="5">
+              </div> 
+            <div class="mb-3">
+                <label for="Description" class="form-label">Title</label>
+                <input type="text" class="form-control" id="Description" placeholder="Type a short description" name="desc" required minlength="10">
+              </div> 
+            <div class="mb-3"> 
+                <label for="Category" class="form-label"> Category </label>
+                <select required id="Category" class="form-select" aria-label="Default select example" name="category">
+                    <option value="" disabled selected>Select category</option>
+                    <option value="Hobby">Hobby</option>
+                    <option value="Food">Food</option>
+                    <option value="Sport">Sport</option>
+                </select>
+            </div>
+
+            <div class="mb-3"> 
+                <label for="Urgency" class="form-label"> Urgency </label>
+                <select required id="Urgency" class="form-select" aria-label="Default select example" name ="urgency">
+                    <option value="" selected>Select task urgency</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Hight">Hight</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary"> CREATE</button>
+            </form>
+
+      </div>
+    </div>
+</div>
+    {% endblock %}

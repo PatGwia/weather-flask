@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1> Pogoda Bukowno </h1>
+<div class="row">
+    {% for document in weather_documents %}
+    <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="weather-card d-flex justify-content-between mb-3">
+            <div>
+                <p class="fs-4"> {{document["description"]}}</p>
+                <p class="text-warning"> {{document["timestamp"]}}</p>
+                <p> Wilgotność powietrza: {{document["humidity"]}}%</p>
+                <p> Ciśnienie: {{document["pressure"]}}hPa</p>
+            </div>
+            <div>
+                <p class="fs-4"> Temperatures</p>
+                <p> Temperatura: {{document["temp"]}}°C</p>
+                <p> Maksymalna: {{document["max"]}}°C</p>
+                <p> Minimalna: {{document["min"]}}°C</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
